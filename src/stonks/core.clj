@@ -1,7 +1,17 @@
 (ns stonks.core
+  (:require [compojure.core :refer [defroutes]]
+            [compojure.route :as route]
+            [ring.adapter.jetty :as ring])
+
   (:gen-class))
 
+(defroutes app-routes
+  (GET "/" [] "Hello World"))
+
+(def application
+  (app-routes))
+
 (defn -main
-  "I don't do a whole lot ... yet."
-  [& args]
-  (println "Hello, World!"))
+  []
+  (let [port (Integer/parseInt (or (System/getenv "PORT") "8080"))]
+    (ring/run-jetty application {:port port :join? false})))
