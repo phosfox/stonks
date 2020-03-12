@@ -1,16 +1,19 @@
 (ns stonks.core
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
-            [ring.adapter.jetty :as ring])
+            [ring.adapter.jetty :as ring]
+            [stonks.routes.static :as static]
+            [stonks.routes.stocks :as stocks])
 
   (:gen-class))
 
 (defroutes app-routes
-  (GET "/" [] "<h1>Hello World</h1>")
-  (route/not-found "<h1>Page not found</h1>"))
+  static/routes
+  stocks/routes)
+
 
 (def application
-  app-routes)
+  (-> app-routes))
 
 (defn -main
   []
