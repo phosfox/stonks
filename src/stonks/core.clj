@@ -11,8 +11,8 @@
 (defroutes app-routes
   static/routes
   stocks/routes
-  (route/not-found (not-found))
-  (route/resources "/"))
+  (route/resources "/")
+  (route/not-found (not-found)))
 
 
 (def application
