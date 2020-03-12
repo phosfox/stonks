@@ -3,13 +3,16 @@
             [compojure.route :as route]
             [ring.adapter.jetty :as ring]
             [stonks.routes.static :as static]
-            [stonks.routes.stocks :as stocks])
+            [stonks.routes.stocks :as stocks]
+            [stonks.views.static :refer [not-found]])
 
   (:gen-class))
 
 (defroutes app-routes
   static/routes
-  stocks/routes)
+  stocks/routes
+  (route/not-found (not-found))
+  (route/resources "/"))
 
 
 (def application

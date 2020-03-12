@@ -2,4 +2,4 @@
   (:require [compojure.core :refer [defroutes GET]]))
 
 (defroutes routes
-  (GET "/s/:symbol" [symbol] {:symbol symbol}))
+  (GET "/s/:symbol" [symbol] (str "<h1>" symbol "</h1>")))
