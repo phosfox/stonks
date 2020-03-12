@@ -10,7 +10,7 @@
   (route/not-found "<h1>Page not found</h1>"))
 
 (def application
-  (app-routes))
+  app-routes)
 
 (defn -main
   []
