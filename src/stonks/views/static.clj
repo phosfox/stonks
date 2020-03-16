@@ -15,4 +15,7 @@
 
 (defn not-found
   []
-  (layout/page {:title "This page does not exist"}))
+  (layout/page {:title "This page does not exist"}
+               [:section.section.has-text-centered
+                [:div.container
+                 [:p.is-size-3 "This page does not exist"]]]))
