@@ -1,5 +1,6 @@
 (ns stonks.views.static
-  (:require [stonks.views.layout :as layout]))
+  (:require [stonks.views.layout :as layout]
+            [hiccup.form :refer [form-to]]))
 
 (defn home
   []
@@ -11,7 +12,8 @@
                   [:h2.subtitle "Get charts of your favourite stocks"]]
                  [:div.field
                   [:div.control
-                   [:input.input.is-large.is-primary {:type "text" :placeholder "APPL, GOOG..."}]]]]]))
+                   (form-to [:get "/s/"]
+                    [:input.input.is-large.is-primary {:type "text" :placeholder "APPL, GOOG..." :name "symbol" :id "symbol"}])]]]]))
 
 (defn not-found
   []

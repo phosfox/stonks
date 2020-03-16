@@ -18,7 +18,7 @@
     [:meta {:charset "utf-8"}]
     [:meta {:name "viewport"
             :content "width=device-width, initial-scale=1"}]
-    (h/include-css "css/bulma.min.css")
+    (h/include-css "/css/bulma.min.css")
     [:title (str title " | Stonks")]]
    [:body
     (concat

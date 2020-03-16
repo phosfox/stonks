@@ -1,5 +1,6 @@
 (ns stonks.routes.stocks
-  (:require [compojure.core :refer [defroutes GET]]))
+  (:require [compojure.core :refer [defroutes GET]]
+            [stonks.views.stocks :as stocks]))
 
 (defroutes routes
-  (GET "/s/:symbol" [symbol] (str "<h1>" symbol "</h1>")))
+  (GET "/s/:symbol" [symbol & rest] (stocks/home)))
