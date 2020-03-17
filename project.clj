@@ -8,7 +8,8 @@
                  [compojure "1.6.1"]
                  [ring/ring-jetty-adapter "1.8.0"]
                  [ring/ring-core "1.8.0"]
-                 [hiccup "1.0.5"]]
+                 [hiccup "1.0.5"]
+                 [clj-http "3.10.0"]]
   :main ^:skip-aot stonks.core
   :target-path "target/%s"
   :ring {:handler stonks.core/application}

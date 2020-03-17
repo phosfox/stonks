@@ -3,4 +3,4 @@
             [stonks.views.stocks :as stocks]))
 
 (defroutes routes
-  (GET "/s/:symbol" [symbol & rest] (stocks/home)))
+  (GET "/s/:symbol" [symbol & rest] (stocks/home symbol)))

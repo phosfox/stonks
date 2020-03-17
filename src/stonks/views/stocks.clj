@@ -3,5 +3,6 @@
             [stonks.views.layout :as layout]))
 
 (defn home
-  []
-  (layout/page {:title "Search"}))
+  [symbol]
+  (layout/page {:title "Search"}
+               [:h1 symbol]))
