@@ -8,4 +8,4 @@
   (layout/page {:title "Search"}
                [:h1 symbol]
                [:div#chart "HIER KOMMT DIE CHART HIN"]
-               [:data (client/get-json-intraday symbol)]))
+               [:data (client/get-json-monthly symbol)]))

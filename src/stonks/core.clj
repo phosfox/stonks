@@ -4,7 +4,8 @@
             [ring.adapter.jetty :as ring]
             [stonks.routes.static :as static]
             [stonks.routes.stocks :as stocks]
-            [stonks.views.static :refer [not-found]])
+            [stonks.views.static :refer [not-found]]
+            [ring.middleware.params :refer [wrap-params]])
 
   (:gen-class))
 
@@ -16,7 +17,8 @@
 
 
 (def application
-  (-> app-routes))
+  (-> app-routes
+      wrap-params))
 
 (defn -main
   []
