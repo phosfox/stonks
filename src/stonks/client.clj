@@ -9,23 +9,23 @@
 
 (def time-series-intraday "TIME_SERIES_INTRADAY")
 
-(def params {:datatype "json" :apikey alphavantage-key})
+(def params {:apikey alphavantage-key})
 
 (def params-monthly (assoc params :function time-series-monthly))
 
 (defn get-json
-  [func s]
-  (client/get base-url {:query-params (assoc params :function func :symbol s)}))
+  [func symbol]
+  (client/get base-url {:query-params (assoc params :function func :symbol symbol)}))
 
 (defn get-json-monthly
-  [s]
-  (let [resp (client/get base-url {:query-params (assoc params-monthly :symbol s)})]
+  [symbol]
+  (let [resp (client/get base-url {:query-params (assoc params-monthly :symbol symbol)})]
     (resp :body)))
 
 (defn get-json-intraday
-  [s]
+  [symbol]
   (let [resp (client/get base-url {:as :json :query-params {:function time-series-intraday
                                                             :apikey alphavantage-key
-                                                            :symbol s
+                                                            :symbol symbol
                                                             :interval "5min"}})]
     (resp :body)))

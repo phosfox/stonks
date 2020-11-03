@@ -13,7 +13,8 @@
                  [:div.field
                   [:div.control
                    (form-to [:get "/s/"]
-                    [:input.input.is-large.is-primary {:type "text" :placeholder "APPL, GOOG..." :name "symbol" :id "symbol"}])]]]]))
+                            [:input.input.is-large.is-primary
+                             {:type "text" :placeholder "APPL, GOOG..." :name "symbol" :id "symbol"}])]]]]))
 
 (defn not-found
   []

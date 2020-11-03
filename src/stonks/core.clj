@@ -5,7 +5,7 @@
             [stonks.routes.static :as static]
             [stonks.routes.stocks :as stocks]
             [stonks.views.static :refer [not-found]]
-            [ring.middleware.params :refer [wrap-params]])
+            [ring.middleware.defaults :refer :all])
 
   (:gen-class))
 
@@ -15,10 +15,8 @@
   (route/resources "/")
   (route/not-found (not-found)))
 
-
 (def application
-  (-> app-routes
-      wrap-params))
+  (wrap-defaults app-routes site-defaults))
 
 (defn -main
   []
