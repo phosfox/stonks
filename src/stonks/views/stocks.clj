@@ -9,19 +9,4 @@
   (layout/page {:title "Search"}
                [:h1 symbol]
                [:div#chart "HIER KOMMT DIE CHART HIN"]
-               [:data (client/get-json-monthly (string/upper-case symbol))]))
-
-
-(defn kebab-case [s]
-  (string/lower-case (string/replace s #"\s" "-")))
-
-(def monthly
-  (json/write-str (client/get-json-monthly "IBM")
-                 :key-fn #(keyword (kebab-case %))))
-
-(keys monthly)
-(:monthly-time-series monthly)
-
-(json/read-str "{\"hallo welt\":1,\"b\":2}"
-               :key-fn #(keyword (kebab-case %)))
-
+               [:data {:style {:visibility "hidden"}} (client/get-monthly-data (string/upper-case symbol))]))

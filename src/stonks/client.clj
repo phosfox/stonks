@@ -1,5 +1,7 @@
 (ns stonks.client
-  (:require [clj-http.client :as client]))
+  (:require [clj-http.client :as client]
+            [clojure.string :as string]
+            [clojure.data.json :as json]))
 
 (def alphavantage-key (System/getenv "ALPHAVANTAGE_KEY"))
 
@@ -13,19 +15,28 @@
 
 (def params-monthly (assoc params :function time-series-monthly))
 
-(defn get-json
+(defn- kebab-case [s]
+  (string/lower-case (string/replace s #"\s" "-")))
+
+(defn- get-json
   [func symbol]
   (client/get base-url {:query-params (assoc params :function func :symbol symbol)}))
 
-(defn get-json-monthly
+(defn- get-json-monthly
   [symbol]
   (let [resp (client/get base-url {:query-params (assoc params-monthly :symbol symbol)})]
-    (resp :body)))
+    (as-> resp r
+      (r :body)
+      (json/read-str r :key-fn #(keyword (kebab-case %)))
+      (r :monthly-time-series))))
 
-(defn get-json-intraday
+(defn- get-json-intraday
   [symbol]
   (let [resp (client/get base-url {:as :json :query-params {:function time-series-intraday
                                                             :apikey alphavantage-key
                                                             :symbol symbol
                                                             :interval "5min"}})]
     (resp :body)))
+
+(defn get-monthly-data [symbol]
+  (json/write-str (get-json-monthly symbol)))
