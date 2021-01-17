@@ -6,7 +6,8 @@
             [stonks.routes.static :as static]
             [stonks.routes.stocks :as stocks]
             [stonks.views.static :refer [not-found]]
-            [ring.middleware.defaults :refer [site-defaults wrap-defaults]]))
+            [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
+            [ring.middleware.json :refer [wrap-json-response]]))
 
 (defroutes app-routes
   static/routes
@@ -15,7 +16,8 @@
   (route/not-found (not-found)))
 
 (def application
-  (wrap-defaults app-routes site-defaults))
+  (-> (wrap-defaults app-routes site-defaults)
+      wrap-json-response))
 
 (defn app-server-start
   [port]

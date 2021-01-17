@@ -10,11 +10,12 @@
 
 (def options
   {:scales {:xAxes [{:ticks {:beginAtZero true}}]}})
-(def properties (clj->js {:type "bar" :data data :options options}))
 
+(def properties (clj->js {:type "bar" :data data :options options}))
 
 (def my-chart (js/Chart. ctx properties))
 
+(+ 1 1)
 
 ;;(println data)
 ;;(println (clj->js options))
