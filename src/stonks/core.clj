@@ -1,12 +1,12 @@
 (ns stonks.core
   (:gen-class)
-  (:require [compojure.core :refer :all]
+  (:require [compojure.core :refer [defroutes]]
             [compojure.route :as route]
             [ring.adapter.jetty :as jetty]
             [stonks.routes.static :as static]
             [stonks.routes.stocks :as stocks]
             [stonks.views.static :refer [not-found]]
-            [ring.middleware.defaults :refer :all]))
+            [ring.middleware.defaults :refer [site-defaults wrap-defaults]]))
 
 (defroutes app-routes
   static/routes
@@ -23,7 +23,7 @@
 
 (defn -main
   [& [port]]
-  (let [port (Integer/parseInt (or (System/getenv "PORT") "8080"))]
+  (let [port (Integer. (or port (System/getenv "PORT")))]
     (app-server-start port)))
 
 (comment

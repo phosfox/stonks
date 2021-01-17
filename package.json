@@ -1,0 +1,30 @@
+{
+  "name": "stonks",
+  "version": "1.0.0",
+  "description": "FIXME: description",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phosfox/stonks.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phosfox/stonks/issues"
+  },
+  "homepage": "https://github.com/phosfox/stonks#readme",
+  "devDependencies": {
+    "shadow-cljs": "^2.11.14"
+  },
+  "dependencies": {
+    "chart.js": "^2.9.4"
+  }
+}

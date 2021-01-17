@@ -1,0 +1,11 @@
+;; shadow-cljs configuration
+{:source-paths
+ ["src/cljs"]
+
+ :dependencies
+ [[cider/cider-nrepl "0.25.6"]]
+
+ :builds
+ {:app {:target :browser
+        :output-dir "resources/public/js"
+        :modules {:main {:entries [app.core]}}}}}
