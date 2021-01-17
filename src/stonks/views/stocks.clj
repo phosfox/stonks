@@ -7,6 +7,5 @@
 (defn home
   [symbol]
   (layout/page {:title "Search"}
-               [:h1  symbol]
-               [:canvas#chart2 {:height 400 :width 400} "HIER KOMMT DIE CHART HIN"]
-               [:data {:style "visibility:hidden"} (client/get-monthly-data (string/upper-case symbol))]))
+               [:h1 symbol]
+               [:canvas#my-chart {:height 385 :width 720}]))
