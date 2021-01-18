@@ -15,7 +15,5 @@
 
 (def my-chart (js/Chart. ctx properties))
 
-(+ 1 1)
-
 ;;(println data)
 ;;(println (clj->js options))
