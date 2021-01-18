@@ -38,5 +38,12 @@
                                                             :interval "5min"}})]
     (resp :body)))
 
+(defn- closing-value "keeps just the closing value" [monthly-data]
+  (map (fn [[k v]] {k (:4.-close v)}) monthly-data))
+
 (defn get-monthly-data [symbol]
-  (json/write-str (get-json-monthly symbol)))
+  (->> (get-json-monthly symbol)
+       closing-value
+       (sort-by first)
+       json/write-str))
+
