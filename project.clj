@@ -16,4 +16,5 @@
   :main ^:skip-aot stonks.core
   :target-path "target/%s"
   :ring {:handler stonks.core/application}
-  :profiles {:uberjar {:aot :all}})
+  :profiles {:uberjar {:aot :all}}
+  :min-lein-version "2.9.5")
