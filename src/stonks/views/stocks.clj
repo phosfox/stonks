@@ -7,7 +7,7 @@
 (defn home
   [symbol]
   (layout/page {:title "Search"}
-               [:h1#symbol symbol]
+               [:div.title.has-text-centered {:id "symbol"} symbol]
                [:div#chart])) 
 
 (defn home-json

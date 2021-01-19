@@ -25,7 +25,7 @@
 
 (defn -main
   [& [port]]
-  (let [port (Integer. (or port (System/getenv "PORT")))]
+  (let [port (Integer. (or port (System/getenv "PORT") 8080))]
     (app-server-start port)))
 
 (comment
