@@ -3,8 +3,7 @@
  ["src/cljs"]
 
  :dependencies
- [[cider/cider-nrepl "0.25.6"]
-  [cljsjs/chartjs "2.9.4-0"]]
+ [[cider/cider-nrepl "0.25.6"]]
 
  :builds
  {:app {:target :browser

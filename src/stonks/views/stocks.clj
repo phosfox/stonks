@@ -8,7 +8,7 @@
   [symbol]
   (layout/page {:title "Search"}
                [:h1 symbol]
-               [:canvas#my-chart {:height 385 :width 720}]))
+               [:div#chart])) 
 
 (defn home-json
   [symbol]

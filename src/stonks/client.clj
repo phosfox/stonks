@@ -41,9 +41,24 @@
 (defn- closing-value "keeps just the closing value" [monthly-data]
   (map (fn [[k v]] {k (:4.-close v)}) monthly-data))
 
+(defn- parse-double [s]
+  (Double/parseDouble s))
+
 (defn get-monthly-data [symbol]
   (->> (get-json-monthly symbol)
-       closing-value
-       (sort-by first)
+       (map to-apex-format)
+       sort
        json/write-str))
 
+(defn date->timestamp [date]
+  (.getEpochSecond (.toInstant (java.sql.Timestamp/valueOf (str date " 19:00:00")))))
+
+(defn to-apex-format [[date values]]
+  (let [open (:1.-open values)
+        high (:2.-high values)
+        low (:3.-low values)
+        close (:4.-close values)
+        data (mapv parse-double [open high low close])]
+    [(* 1000 (date->timestamp (name date))) data]))
+
+(count (str (* 1000 1567697090)))

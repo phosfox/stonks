@@ -1,19 +1,27 @@
 (ns app.core
-  (:require ["chart.js" :as Chart]))
+  (:require ["apexcharts" :as apex]
+            [clojure.string :as str]))
 
-(def ctx (.getContext (.getElementById js/document "my-chart") "2d"))
+(def ctx (.getElementById js/document "chart"))
 
-(def data
-  {:datasets [{:label "test"
-               :data [10 20 30 40 50 60 70]}]
-   :labels ["a" "b" "c" "d" "e" "f" "g"]})
+(def header {:headers {:Content-Type "application/json"}})
 
-(def options
-  {:scales {:xAxes [{:ticks {:beginAtZero true}}]}})
+(defn- options [data]
+  {:chart {:type "candlestick"}
+   :series [{:name "Stonks"
+             :data data}]
+   :xaxis {:labels {:format "yyyy"}}})
 
-(def properties (clj->js {:type "bar" :data data :options options}))
+(def path (.-pathname js/location))
 
-(def my-chart (js/Chart. ctx properties))
 
-;;(println data)
-;;(println (clj->js options))
+(def stock-symbol (last (clojure.string/split path #"/")))
+
+
+
+(defn render-chart [] (-> (.fetch js/window (str "http://localhost:8080/s/" stock-symbol) (clj->js header))
+                        (.then #(.json %))
+                        (.then (fn [data] (.render (apex. ctx (clj->js (options (js->clj data)))))))
+                        (.catch #(js/console.error "could not fetch data"))))
+
+(render-chart)
