@@ -12,9 +12,9 @@
                   [:h2.subtitle "Get charts of your favourite stocks"]]
                  [:div.field
                   [:div.control
-                   (form-to [:get "/s/"]
+                   (form-to [:get "/s"]
                             [:input.input.is-large.is-primary
-                             {:type "text" :placeholder "APPL, GOOG..." :name "symbol" :id "symbol"}])]]]]))
+                             {:type "text" :placeholder "AAPL, GOOG..." :name "symbol" :id "symbol"}])]]]]))
 
 (defn not-found
   []

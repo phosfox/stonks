@@ -7,7 +7,7 @@
 (defn home
   [symbol]
   (layout/page {:title "Search"}
-               [:h1 symbol]
+               [:h1#symbol symbol]
                [:div#chart])) 
 
 (defn home-json

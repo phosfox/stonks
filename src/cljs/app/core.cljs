@@ -12,12 +12,7 @@
              :data data}]
    :xaxis {:labels {:format "yyyy"}}})
 
-(def path (.-pathname js/location))
-
-
-(def stock-symbol (last (clojure.string/split path #"/")))
-
-
+(def stock-symbol (.-textContent (.getElementById js/document "symbol")))
 
 (defn render-chart [] (-> (.fetch js/window (str "http://localhost:8080/s/" stock-symbol) (clj->js header))
                         (.then #(.json %))

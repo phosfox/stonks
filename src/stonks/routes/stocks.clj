@@ -7,8 +7,8 @@
     (not (empty? (re-find #"^application/(.+\+)?json" type)))))
 
 (defroutes routes
+  (GET "/s" {params :query-params} (stocks/home (get params "symbol")))
   (GET "/s/:symbol" [symbol :as req] (if (json-request? req)
                                        (stocks/home-json symbol)
-                                       (stocks/home symbol)))
-  #_(GET "/s" [symbol] (stocks/home "AAPL")))
+                                       (stocks/home symbol))))
 

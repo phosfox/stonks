@@ -44,12 +44,6 @@
 (defn- parse-double [s]
   (Double/parseDouble s))
 
-(defn get-monthly-data [symbol]
-  (->> (get-json-monthly symbol)
-       (map to-apex-format)
-       sort
-       json/write-str))
-
 (defn date->timestamp [date]
   (.getEpochSecond (.toInstant (java.sql.Timestamp/valueOf (str date " 19:00:00")))))
 
@@ -61,4 +55,10 @@
         data (mapv parse-double [open high low close])]
     [(* 1000 (date->timestamp (name date))) data]))
 
-(count (str (* 1000 1567697090)))
+(defn get-monthly-data [symbol]
+  (->> (get-json-monthly symbol)
+       (map to-apex-format)
+       sort
+       json/write-str))
+
+
