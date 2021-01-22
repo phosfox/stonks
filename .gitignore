@@ -1,3 +1,5 @@
+js/
+cljs-runtime/
 /target
 /classes
 /checkouts
