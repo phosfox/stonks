@@ -13,14 +13,26 @@
     (str month "/" year)))
 
 (defn- options [data]
-  {:chart {:type "candlestick"}
+  {:chart {:type "area"
+           :width "80%"}
+   :fill {:type "gradient"
+          :gradient {:shadeIntensity 1
+                     :inverseColors false
+                     :opacityFrom 0.5
+                     :opacityTo 0
+                     :stops [0 90 100]}}
+   :dataLabels {:enabled false}
+   :markers {:size 0}
+   
    :series [{:name "Stonks"
              :data data}]
-   :xaxis {:labels {:formatter timestamp->date
-                    :style {:fontSize "14px"}}
-           :tickAmount 20}
-   :yaxis {:labels {:formatter (fn [value] (str value "$"))
-                    :style {:fontSize "20px"}}}})
+   :xaxis {:type "datetime"}
+   :yaxis {:labels {:formatter (fn [value] (.toFixed value 0))
+                    :style {:fontSize "20px"}}
+           :title {:text "Price in $"
+                   :style {:fontSize "20px"}}}
+   :tooltip {:shared false
+             :y {:formatter (fn [value] (.toFixed value 0))}}})
 
 (def stock-symbol (.-textContent (.getElementById js/document "symbol")))
 

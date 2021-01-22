@@ -8,7 +8,7 @@
   [symbol]
   (layout/page {:title "Search"}
                [:div.title.has-text-centered {:id "symbol"} symbol]
-               [:div#chart])) 
+               [:div {:class "container" :id "chart"}])) 
 
 (defn home-json
   [symbol]

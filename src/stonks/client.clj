@@ -47,7 +47,7 @@
 (defn date->timestamp [date]
   (.getEpochSecond (.toInstant (java.sql.Timestamp/valueOf (str date " 19:00:00")))))
 
-(defn to-apex-format [[date values]]
+(defn- to-apex-candlestick [[date values]]
   (let [open (:1.-open values)
         high (:2.-high values)
         low (:3.-low values)
@@ -55,10 +55,15 @@
         data (mapv parse-double [open high low close])]
     [(* 1000 (date->timestamp (name date))) data]))
 
+(defn- to-apex-line [[date values]]
+  (let [close (:4.-close values)
+        ts (* 1000 (date->timestamp (name date)))]
+    {:x ts :y (parse-double close)}))
+
 (defn get-monthly-data [symbol]
   (->> (get-json-monthly symbol)
-       (map to-apex-format)
-       sort
+       (map to-apex-line)
+       (sort-by :x)
        json/write-str))
 
 
