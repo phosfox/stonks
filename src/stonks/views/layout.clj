@@ -27,4 +27,3 @@
     (h/include-css "/css/bulma.min.css")
     (h/include-js "/js/main.js")
     (h/include-css "/css/styles.css")]))
-    

@@ -1,4 +1,4 @@
-(ns app.core
+(ns cljs.app.core
   (:require ["apexcharts" :as apex]
             [clojure.string :as str]))
 
@@ -49,4 +49,8 @@
                         (.then (fn [data] (.render (apex. ctx (clj->js (options (js->clj data)))))))
                         (.catch #(js/console.error "could not fetch data"))))
 
-(render-chart)
+(defn main []
+  (when ctx
+    (render-chart)))
+
+(main)

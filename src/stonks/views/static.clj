@@ -14,7 +14,10 @@
                   [:div.control
                    (form-to [:get "/s"]
                             [:input.input.is-large.is-primary
-                             {:type "text" :placeholder "AAPL, GOOG..." :name "symbol" :id "symbol"}])]]]]))
+                             {:type "text"
+                              :placeholder "AAPL, GOOG..."
+                              :name "symbol"
+                              :id "symbol"}])]]]]))
 
 (defn not-found
   []
