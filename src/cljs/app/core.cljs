@@ -22,15 +22,21 @@
                      :opacityTo 0
                      :stops [0 90 100]}}
    :dataLabels {:enabled false}
+   :theme {:palette "palette4"}
    :markers {:size 0}
    
    :series [{:name "Stonks"
              :data data}]
-   :xaxis {:type "datetime"}
+   :xaxis {:type "datetime"
+           :labels {:style {:fontSize "15px"
+                            :fontFamily "Helvetica, Arial, sans-serif"}}}
    :yaxis {:labels {:formatter (fn [value] (.toFixed value 0))
-                    :style {:fontSize "20px"}}
+                    :style {:fontSize "20px"
+                            :fontFamily "Helvetica, Arial, sans-serif"}}
            :title {:text "Price in $"
-                   :style {:fontSize "20px"}}}
+                   :style {:fontSize "20px"
+                           :fontFamily "Helvetica, Arial, sans-serif"
+                           :fontWeight 400}}}
    :tooltip {:shared false
              :y {:formatter (fn [value] (.toFixed value 0))}}})
 
