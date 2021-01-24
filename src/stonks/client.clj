@@ -5,6 +5,8 @@
 
 (def alphavantage-key (System/getenv "ALPHAVANTAGE_KEY"))
 
+#_(assert (not= (alphavantage-key) nil))
+
 (def base-url "https://www.alphavantage.co/query")
 
 (def time-series-monthly "TIME_SERIES_MONTHLY")

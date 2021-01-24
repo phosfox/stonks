@@ -1,15 +1,27 @@
 # stonks
 
-FIXME: description
-
 ## Installation
 
-Download from http://example.com/FIXME.
+### Build image with Docker
+```
+docker build -t stonks .
+```
 
+### Run container
+```
+docker run --rm -p 8080:8080 \
+       -e ALPHAVANTAGE_KEY=$(echo $ALPHAVANTAGE_KEY) \
+       --name stonks-running stonks
+```
 ## Usage
 
-Watch cljs source files for changes.
+Start ring server
 ```
-lein cljsbuild auto
+lein ring server
 ```
+
+Watch cljs source code
+```
+shadow-cljs watch app
+``` 
 
