@@ -49,6 +49,8 @@
                         (.then (fn [data] (.render (apex. ctx (clj->js (options (js->clj data)))))))
                         (.catch #(js/console.error "could not fetch data"))))
 
+(js/console.log "core.cljs loaded")
+
 (defn main []
   (when ctx
     (render-chart)))
