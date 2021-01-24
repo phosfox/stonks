@@ -1,9 +1,9 @@
 build:
   docker:
     web: Dockerfile
-run:
-  command: 
-    - docker run --rm -p 8080:8080 \
-       -e ALPHAVANTAGE_KEY=$(echo $ALPHAVANTAGE_KEY) \
-       --name stonks-running stonks
-  image: web
+#run:
+#  command: 
+#    - docker run --rm -p 8080:8080 \
+#       -e ALPHAVANTAGE_KEY=$(echo $ALPHAVANTAGE_KEY) \
+#       --name stonks-running stonks
+#  image: web
