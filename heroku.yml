@@ -6,3 +6,4 @@ release:
     - docker run --rm -p 8080:8080 \
        -e ALPHAVANTAGE_KEY=$(echo $ALPHAVANTAGE_KEY) \
        --name stonks-running stonks
+  image: web
