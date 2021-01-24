@@ -1,3 +1,13 @@
 .title, .subtitle, .navbar-brand {
     font-family: Helvetica, Arial, sans-serif;
 }
+
+.control {
+    text-align: center;
+    margin: 1%;
+}
+
+.input, .textarea {
+    width: 50%;
+    margin-right: auto;
+}
