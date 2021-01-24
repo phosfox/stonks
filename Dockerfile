@@ -1,6 +1,6 @@
 FROM clojure:openjdk-11-lein-2.9.5-buster
-COPY . /usr/stonks
-WORKDIR /usr/stonks
+COPY . /stonks
+WORKDIR /stonks
 RUN apt-get update
 RUN apt-get -y install curl gnupg
 RUN curl -sL https://deb.nodesource.com/setup_15.x  | bash -
