@@ -11,3 +11,9 @@
     width: 50%;
     margin-right: auto;
 }
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
