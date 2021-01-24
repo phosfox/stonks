@@ -1,7 +1,7 @@
 build:
   docker:
     web: Dockerfile
-release:
+run:
   command: 
     - docker run --rm -p 8080:8080 \
        -e ALPHAVANTAGE_KEY=$(echo $ALPHAVANTAGE_KEY) \
