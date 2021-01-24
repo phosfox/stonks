@@ -54,5 +54,3 @@
 (defn main []
   (when ctx
     (render-chart)))
-
-(main)
