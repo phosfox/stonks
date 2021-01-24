@@ -12,7 +12,7 @@
                  [clj-http "3.10.0"]
                  [ring/ring-defaults "0.3.2"]
                  [ring/ring-json "0.5.0"]
-                 [org.clojure/data.json "1.0.0"]
+                 [org.clojure/data.json "1.0.0"]]
   :main ^:skip-aot stonks.core
   :target-path "target/%s"
   :aliases {"shadow-cljs" ["run" "-m" "shadow.cljs.devtools.cli"]}

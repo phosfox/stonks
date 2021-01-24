@@ -1,10 +1,9 @@
-FROM clojure:openjdk-11-lein-2.9.5-buster as builder
+FROM clojure:openjdk-8-lein-2.9.5-buster as builder
 WORKDIR /stonks
-RUN apt-get update
-RUN apt-get -y install curl gnupg
-RUN curl -sL https://deb.nodesource.com/setup_15.x  | bash -
-RUN apt-get -y install nodejs
-RUN npm install -g shadow-cljs
+RUN apt-get update && \ 
+    apt-get -y install curl gnupg && \
+    curl -sL https://deb.nodesource.com/setup_15.x  | bash -  && \
+    apt-get -y install nodejs && npm install -g shadow-cljs
 
 COPY project.clj /stonks
 RUN lein deps

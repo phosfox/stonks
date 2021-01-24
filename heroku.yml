@@ -2,7 +2,6 @@ build:
   docker:
     web: Dockerfile
 run:
-  web: docker run --rm \
-       -p 8080:8080 \
+  web: docker run --rm -p 8080:8080 \
        -e ALPHAVANTAGE_KEY=$(echo $ALPHAVANTAGE_KEY) \
        --name stonks-running stonks
