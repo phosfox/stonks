@@ -5,7 +5,7 @@
   []
   [[:nav.navbar
     [:div.navbar-brand
-     [:a.is-size-4.navbar-item {:href "/"}  "📈 Stonks"]]]])
+     [:a.is-size-8.navbar-item {:href "/"}  "📈 Stonks"]]]])
 
 (defn- body
   [content]
