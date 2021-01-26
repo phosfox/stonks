@@ -10,5 +10,6 @@
   (GET "/s" {params :query-params} (stocks/home (get params "symbol")))
   (GET "/s/:symbol" [symbol :as req] (if (json-request? req)
                                        (stocks/home-json symbol)
-                                       (stocks/home symbol))))
+                                       (stocks/home symbol)))
+  (GET "/s/search/:symbol" [symbol :as req] (stocks/search-symbol symbol)))
 

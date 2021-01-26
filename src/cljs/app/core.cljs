@@ -42,14 +42,22 @@
 
 (def stock-symbol (.-textContent (.getElementById js/document "symbol")))
 
-(def url (str (.-origin js/location) "/s/" stock-symbol))
+(def base-url (str (.-origin js/location) "/s/"))
 
-(defn render-chart [] (-> (.fetch js/window url (clj->js header))
+(defn render-chart [] (-> (.fetch js/window (str base-url stock-symbol) (clj->js header))
                         (.then #(.json %))
                         (.then (fn [data] (.render (apex. ctx (clj->js (options (js->clj data)))))))
                         (.catch #(js/console.error "could not fetch data"))))
 
-(js/console.log "core.cljs loaded")
+(defn search-symbol [symbol]
+  (-> (.fetch js/window (str base-url "search/" symbol) (clj->js header))
+      (.then #(.json %))
+      (.then #(js/console.log %))
+      (.catch #(js/console.error "could not find symbol"))))
+
+(def input (.querySelector js/document "input"))
+
+(.addEventListener input "keyup", #(js/console.log (search-symbol (.-value input))))
 
 (defn main []
   (when ctx

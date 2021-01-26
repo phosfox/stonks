@@ -1,7 +1,6 @@
 (ns stonks.views.stocks
   (:require [stonks.views.layout :as layout]
             [stonks.client :as client]
-            [clojure.string :as string]
             [ring.util.response :refer [response]]
             [hiccup.form :refer [form-to]]))
 
@@ -25,3 +24,7 @@
 (defn home-json
   [symbol]
   (response (client/get-monthly-data symbol)))
+
+(defn search-symbol
+  [keywords]
+  (response (client/search-symbol keywords)))

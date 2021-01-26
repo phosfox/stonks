@@ -13,6 +13,8 @@
 
 (def time-series-intraday "TIME_SERIES_INTRADAY")
 
+(def symbol-search "SYMBOL_SEARCH")
+
 (def params {:apikey alphavantage-key})
 
 (def params-monthly (assoc params :function time-series-monthly))
@@ -20,9 +22,28 @@
 (defn- kebab-case [s]
   (string/lower-case (string/replace s #"\s" "-")))
 
+(defn take-last-split [s]
+  (string/lower-case (last (string/split s #"\s"))))
+
 (defn- get-json
   [func symbol]
   (client/get base-url {:query-params (assoc params :function func :symbol symbol)}))
+
+(defn- get-json-search [keywords]
+  (let [resp (client/get base-url {:query-params (assoc params :function symbol-search :keywords keywords)})
+        matches (-> resp
+                    (:body)
+                    (json/read-str , :key-fn #(keyword (take-last-split %)))
+                    :bestmatches)]
+    (->> matches
+         (mapv (fn [{:keys [symbol name matchscore]}] {:name name :symbol symbol :matchscore matchscore})))))
+
+(def t (get-json-search "IBM"))
+t
+(mapv (fn [{:keys [marketclose]}] {:marketclose marketclose}) t)
+
+(defn search-symbol [keywords]
+  (get-json-search keywords))
 
 (defn- get-json-monthly
   [symbol]
@@ -68,4 +89,4 @@
        (sort-by :x)
        json/write-str))
 
-
+  
