@@ -1,6 +1,7 @@
 (ns cljs.app.core
   (:require ["apexcharts" :as apex]
-            [clojure.string :as str]))
+            [clojure.string :as str]
+            [goog.functions :as g]))
 
 (def ctx (.getElementById js/document "chart"))
 
@@ -49,15 +50,17 @@
                         (.then (fn [data] (.render (apex. ctx (clj->js (options (js->clj data)))))))
                         (.catch #(js/console.error "could not fetch data"))))
 
-(defn search-symbol [symbol]
+(defn- search-symbol [symbol]
   (-> (.fetch js/window (str base-url "search/" symbol) (clj->js header))
       (.then #(.json %))
       (.then #(js/console.log %))
       (.catch #(js/console.error "could not find symbol"))))
 
+(def debounced-search (g/debounce search-symbol 200))
+
 (def input (.querySelector js/document "input"))
 
-(.addEventListener input "keyup", #(js/console.log (search-symbol (.-value input))))
+(.addEventListener input "keyup", #(js/console.log (debounced-search (.-value input))))
 
 (defn main []
   (when ctx
