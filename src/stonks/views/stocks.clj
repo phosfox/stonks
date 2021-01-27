@@ -10,12 +10,14 @@
                [:level
                 [:level-item.field
                  [:div.control
-                  {:style {:width "70%"}}
-                  (form-to [:get "/s"]
-                           [:input.input
-                            {:type "text"
-                             :placeholder "AAPL, GOOG"
-                             :name "symbol"}])]]]
+                  (form-to {:autocomplete "off"}
+                           [:get "/s"]
+                           [:div {:class "autocomplete"}
+                            [:input.input
+                              {:type "text"
+                               :placeholder "AAPL, GOOG"
+                               :name "symbol"}
+                             [:div {:class "autocomplete-items" :id "autocomplete-list"}]]])]]]
                [:div.title.has-text-centered {:id "symbol"} symbol]
                [:div {:class "container" :id "chart"}])) 
 

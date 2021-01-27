@@ -50,17 +50,42 @@
                         (.then (fn [data] (.render (apex. ctx (clj->js (options (js->clj data)))))))
                         (.catch #(js/console.error "could not fetch data"))))
 
+(def input (.querySelector js/document "input"))
+
+(def autocomplete-list (.getElementById js/document "autocomplete-list"))
+
+(defn- new-div [text]
+  (let [div (.createElement js/document "div")]
+    (set! (.-textContent div) text)
+    div))
+
+
+(defn- append-child [parent child]
+  (.appendChild parent child))
+
+(defn show-element [ele]
+  (set! (.-visibility (.-style ele)) "visible"))
+
+(defn hide-element [ele]
+  (set! (.-visibility (.-style ele)) "hidden"))
+  
+
+(def not-blank? (complement str/blank?))
+
 (defn- search-symbol [symbol]
-  (-> (.fetch js/window (str base-url "search/" symbol) (clj->js header))
-      (.then #(.json %))
-      (.then #(js/console.log %))
-      (.catch #(js/console.error "could not find symbol"))))
+  (if (str/blank? (.-value input))
+    (hide-element autocomplete-list)
+    (-> (.fetch js/window (str base-url "search/" symbol) (clj->js header))
+        (.then #(.json %))
+        (.then #(mapv (fn [{:keys [name symbol]}] (new-div (str symbol " " name))) (js->clj % :keywordize-keys true)))
+        (.then (fn [divs] (do (.replaceChildren autocomplete-list)
+                              (mapv #(append-child autocomplete-list %) divs))))
+        (.then (show-element autocomplete-list))
+        (.catch #(js/console.error "could not find symbol")))))
 
 (def debounced-search (g/debounce search-symbol 200))
 
-(def input (.querySelector js/document "input"))
-
-(.addEventListener input "keyup", #(js/console.log (debounced-search (.-value input))))
+(.addEventListener input "keyup", #(debounced-search (str/trim (.-value input))))
 
 (defn main []
   (when ctx
