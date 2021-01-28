@@ -18,28 +18,36 @@
 
 (def base-url (str (.-origin js/location) "/s/"))
 
-(defn render-chart [] (-> (.fetch js/window (str base-url stock-symbol) (clj->js header))
-                        (.then #(.json %))
-                        (.then (fn [data] (.render (apex. ctx (clj->js (chart/options (js->clj data)))))))
-                        (.catch #(js/console.error "could not fetch data"))))
-
-(def input (.querySelector js/document "input"))
-
 (def autocomplete-list (.getElementById js/document "autocomplete-list"))
 
-(defn- new-div [text]
-  (let [div (.createElement js/document "div")]
-    (set! (.-textContent div) text)
-    div))
-
-(defn- append-child [parent child]
-  (.appendChild parent child))
+(def input (.querySelector js/document "input"))
 
 (defn show-element [ele]
   (set! (.-visibility (.-style ele)) "visible"))
 
 (defn hide-element [ele]
   (set! (.-visibility (.-style ele)) "hidden"))
+
+(defn render-chart []
+   (-> (.fetch js/window (str base-url stock-symbol) (clj->js header))
+       (.then #(.json %))
+       (.then (fn [data] (.render (apex. ctx (clj->js (chart/options (js->clj data)))))))
+       (.catch #(js/console.error "could not fetch data"))))
+
+
+
+
+
+(defn- new-list-item [symbol name]
+  (let [div (.createElement js/document "div")]
+    (set! (.-textContent div) (str symbol " " name))
+    (set! (.-id div) symbol)
+    (set! (.-className div) "autocomplete-item")
+    div))
+
+(defn- append-child [parent child]
+  (.appendChild parent child))
+
   
 (def not-blank? (complement str/blank?))
 
@@ -47,17 +55,24 @@
   (->> m
        (map #(js->clj % :keywordize-keys true))
        (mapv (fn [{:keys [symbol name]}]
-               (new-div (str symbol " " name))))))
+               (new-list-item symbol name)))))
 
 (defn- replace-search-list! [divs]
   (.replaceChildren autocomplete-list)
   (mapv #(append-child autocomplete-list %) divs))
 
+(defn- replace-search-with [string]
+  (set! (.-value input) string))
+
 (defn- render-autocomplete! [data]
   (-> data
       divs-from-data
       replace-search-list!)
-  (show-element autocomplete-list))
+  (show-element autocomplete-list)
+  (mapv
+   (fn [item]
+     (.addEventListener item "click" #(set! (.-href js/location) (str base-url (.-id (.-srcElement %)))))) ;This is not very clean
+   (.querySelectorAll js/document ".autocomplete-item")))
 
 (defn- fetch-symbol-data [symbol]
   (if (str/blank? (.-value input))
@@ -70,7 +85,8 @@
 
 (def debounced-search (g/debounce fetch-symbol-data 200))
 
-(.addEventListener input "keyup", #(debounced-search (str/trim (.-value input))))
+(.addEventListener input "keyup" #(debounced-search (str/trim (.-value input))))
+
 
 (defn main []
   (when ctx
