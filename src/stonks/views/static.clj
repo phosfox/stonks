@@ -4,24 +4,25 @@
 
 (defn home
   []
-  (layout/page {:title "Home"}
+  (layout/page {:title "Home" :page-type "home"}
                [:section.hero.is-primary.is-medium.start-section-padding
                 [:div.hero-body
                  [:div.container.has-text-centered
                   [:h1.title "Search for a stock symbol"]
                   [:h2.subtitle "Get charts of your favourite stocks"]]
-                 [:div.field
-                  [:div.control
-                   (form-to [:get "/s"]
-                            [:input.input.is-large.is-primary
+                 [:div.control
+                  (form-to {:autocomplete "off"}
+                           [:get "/s"]
+                           [:div {:class "autocomplete"}
+                            [:input.input
                              {:type "text"
-                              :placeholder "AAPL, GOOG..."
-                              :name "symbol"
-                              :id "symbol"}])]]]]))
+                              :placeholder "AAPL, GOOG"
+                              :name "symbol"}
+                             [:div {:class "autocomplete-items" :id "autocomplete-list"}]]])]]]))
 
 (defn not-found
   []
-  (layout/page {:title "This page does not exist"}
+  (layout/page {:title "This page does not exist" :page-type "404"}
                [:section.section.has-text-centered
                 [:div.container
                  [:p.is-size-3 "This page does not exist"]]]))

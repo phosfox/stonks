@@ -14,7 +14,7 @@
         month (inc (.getUTCMonth d))]
     (str month "/" year)))
 
-(def stock-symbol (.-textContent (.getElementById js/document "symbol")))
+#_(def stock-symbol (.-textContent (.getElementById js/document "symbol")))
 
 (def base-url (str (.-origin js/location) "/s/"))
 
@@ -29,13 +29,11 @@
   (set! (.-visibility (.-style ele)) "hidden"))
 
 (defn render-chart []
-   (-> (.fetch js/window (str base-url stock-symbol) (clj->js header))
-       (.then #(.json %))
-       (.then (fn [data] (.render (apex. ctx (clj->js (chart/options (js->clj data)))))))
-       (.catch #(js/console.error "could not fetch data"))))
-
-
-
+  (let [symbol (.-textContent (.getElementById js/document "symbol"))]
+    (-> (.fetch js/window (str base-url symbol) (clj->js header))
+      (.then #(.json %))
+      (.then (fn [data] (.render (apex. ctx (clj->js (chart/options (js->clj data)))))))
+      (.catch #(js/console.error "could not fetch data")))))
 
 
 (defn- new-list-item [symbol name]
@@ -48,7 +46,7 @@
 (defn- append-child [parent child]
   (.appendChild parent child))
 
-  
+
 (def not-blank? (complement str/blank?))
 
 (defn- divs-from-data [m]
@@ -85,9 +83,9 @@
 
 (def debounced-search (g/debounce fetch-symbol-data 200))
 
-(.addEventListener input "keyup" #(debounced-search (str/trim (.-value input))))
-
 
 (defn main []
   (when ctx
-    (render-chart)))
+    (render-chart))
+  (when input
+    (.addEventListener input "keyup" #(debounced-search (str/trim (.-value input))))))

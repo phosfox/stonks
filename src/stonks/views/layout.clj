@@ -8,11 +8,11 @@
      [:a.is-size-8.navbar-item {:href "/"}  "📈 Stonks"]]]])
 
 (defn- body
-  [content]
-  [[:div#content content]])
+  [content page-type]
+  [[:div#content {:class page-type} content]])
 
 (defn page
-  [{:keys [title] :as options} & content]
+  [{:keys [title page-type] :as options} & content]
   (h/html5
    [:head
     [:meta {:charset "utf-8"}]
@@ -22,7 +22,7 @@
    [:body
     (concat
      (navbar)
-     (body content))]
+     (body content page-type))]
    [:footer
     (h/include-css "/css/bulma.min.css")
     (h/include-js "/js/main.js")
