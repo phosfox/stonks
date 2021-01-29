@@ -38,10 +38,6 @@
     (->> matches
          (mapv (fn [{:keys [symbol name matchscore]}] {:name name :symbol symbol :matchscore matchscore})))))
 
-(def t (get-json-search "IBM"))
-t
-(mapv (fn [{:keys [marketclose]}] {:marketclose marketclose}) t)
-
 (defn search-symbol [keywords]
   (get-json-search keywords))
 
@@ -82,6 +78,7 @@ t
   (let [close (:4.-close values)
         ts (* 1000 (date->timestamp (name date)))]
     {:x ts :y (parse-double close)}))
+
 
 (defn get-monthly-data [symbol]
   (->> (get-json-monthly symbol)

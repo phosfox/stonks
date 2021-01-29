@@ -16,7 +16,7 @@
 
 #_(def stock-symbol (.-textContent (.getElementById js/document "symbol")))
 
-(def base-url (str (.-origin js/location) "/s/"))
+(def base-url (str (.-origin js/location) "/s"))
 
 (def autocomplete-list (.getElementById js/document "autocomplete-list"))
 
@@ -30,7 +30,7 @@
 
 (defn render-chart []
   (let [symbol (.-textContent (.getElementById js/document "symbol"))]
-    (-> (.fetch js/window (str base-url symbol) (clj->js header))
+    (-> (.fetch js/window (str base-url "/" symbol) (clj->js header))
       (.then #(.json %))
       (.then (fn [data] (.render (apex. ctx (clj->js (chart/options (js->clj data)))))))
       (.catch #(js/console.error "could not fetch data")))))
@@ -69,13 +69,13 @@
   (show-element autocomplete-list)
   (mapv
    (fn [item]
-     (.addEventListener item "click" #(set! (.-href js/location) (str base-url (.-id (.-srcElement %)))))) ;This is not very clean
+     (.addEventListener item "click" #(set! (.-href js/location) (str base-url "?symbol=" (.-id (.-srcElement %)))))) ;This is not very clean
    (.querySelectorAll js/document ".autocomplete-item")))
 
 (defn- fetch-symbol-data [symbol]
   (if (str/blank? (.-value input))
     (hide-element autocomplete-list)
-    (-> (.fetch js/window (str base-url "search/" symbol) (clj->js header))
+    (-> (.fetch js/window (str base-url "/search/" symbol) (clj->js header))
         (.then #(.json %))
         (.then #(render-autocomplete! %))
         (.catch #(js/console.error (str
