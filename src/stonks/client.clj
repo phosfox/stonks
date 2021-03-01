@@ -3,9 +3,8 @@
             [clojure.string :as string]
             [clojure.data.json :as json]))
 
-(def alphavantage-key (System/getenv "ALPHAVANTAGE_KEY"))
-
-#_(assert (not= (alphavantage-key) nil))
+(defn alphavantage-key [] (System/getenv "ALPHAVANTAGE_KEY"))
+(when (nil? (alphavantage-key)) (throw (Exception. "API KEY IS NOT SET")))
 
 (def base-url "https://www.alphavantage.co/query")
 
@@ -15,7 +14,7 @@
 
 (def symbol-search "SYMBOL_SEARCH")
 
-(def params {:apikey alphavantage-key})
+(def params {:apikey (alphavantage-key)})
 
 (def params-monthly (assoc params :function time-series-monthly))
 
@@ -52,7 +51,7 @@
 (defn- get-json-intraday
   [symbol]
   (let [resp (client/get base-url {:as :json :query-params {:function time-series-intraday
-                                                            :apikey alphavantage-key
+                                                            :apikey (alphavantage-key)
                                                             :symbol symbol
                                                             :interval "5min"}})]
     (resp :body)))
@@ -86,4 +85,5 @@
        (sort-by :x)
        json/write-str))
 
-  
+(get-monthly-data "IBM")
+(get-json-monthly "IBM")

@@ -81,7 +81,7 @@
         (.catch #(js/console.error (str
                                     "could not find symbol" " " %))))))
 
-(def debounced-search (g/debounce fetch-symbol-data 200))
+(def debounced-search (g/debounce fetch-symbol-data 300))
 
 
 (defn main []
