@@ -1,4 +1,4 @@
-(ns stonks.client
+(ns stonks.clients.alphavantage
   (:require [clj-http.client :as client]
             [clojure.string :as string]
             [clojure.data.json :as json]))
@@ -84,6 +84,3 @@
        (map to-apex-line)
        (sort-by :x)
        json/write-str))
-
-(get-monthly-data "IBM")
-(get-json-monthly "IBM")

@@ -1,6 +1,6 @@
 (ns stonks.views.stocks
   (:require [stonks.views.layout :as layout]
-            [stonks.client :as client]
+            [stonks.clients.alphavantage :as alpha]
             [ring.util.response :refer [response content-type]]
             [hiccup.form :refer [form-to]]
             [clojure.string :as str]
@@ -22,12 +22,12 @@
                              [:div {:class "autocomplete-items" :id "autocomplete-list"}]]])]]]
                [:div.title.has-text-centered {:id "symbol"} (str/upper-case symbol)]
                [:div {:class "container" :id "chart"}]
-               [:div {:data-chart (client/get-monthly-data symbol)}]))
+               [:div {:data-chart (alpha/get-monthly-data symbol)}]))
 
 (defn home-json
   [symbol]
-  (content-type (response (client/get-monthly-data symbol)) "application/json"))
+  (content-type (response (alpha/get-monthly-data symbol)) "application/json"))
 
 (defn search-symbol
   [keywords]
-  (content-type (response (client/search-symbol keywords)) "application/json"))
+  (content-type (response (alpha/search-symbol keywords)) "application/json"))
