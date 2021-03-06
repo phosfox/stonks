@@ -2,7 +2,8 @@
 
 (defn options [data]
   {:chart {:type "area"
-           :width "80%"}
+           :height "90%"
+           :width "90%"}
    :fill {:type "gradient"
           :gradient {:shadeIntensity 1
                      :inverseColors false

@@ -1,3 +1,7 @@
+#chart {
+  height: 70vh;
+}
+
 .title, .subtitle, .navbar-brand {
     font-family: Helvetica, Arial, sans-serif;
 }
