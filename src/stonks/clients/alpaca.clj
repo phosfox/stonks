@@ -19,6 +19,5 @@
                             :timeframe "1Hour"}
              })]
     (->  (resp :body)
-         (json/read-str :key-fn keyword))))
-
-(get-json "IBM")
+         (json/read-str :key-fn keyword)
+         :bars)))
